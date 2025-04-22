@@ -1,0 +1,19 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres
+    container_name: postgres-data
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    volumes:
+      - postgre-data:/var/lib/postgresql/data
+    ports:
+      - '8090:5432'
+
+volumes:
+  postgre-data:
+    external: true
+    name: postgre-data

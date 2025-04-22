@@ -1,0 +1,10 @@
+# Forzar EOL consistente en el repositorio
+* text=auto
+
+# Maven Wrapper
+/mvnw text eol=lf
+/mvnw.cmd text eol=crlf
+
+# Archivos de configuración por microservicio (como en customer/, order/, etc.)
+**/mvnw text eol=lf
+**/mvnw.cmd text eol=crlf
