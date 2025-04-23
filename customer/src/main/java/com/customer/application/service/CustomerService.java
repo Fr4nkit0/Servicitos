@@ -8,6 +8,7 @@ import com.customer.application.dto.request.UpdateAddress;
 import com.customer.application.dto.request.UpdateCustomer;
 import com.customer.application.dto.response.GetAddress;
 import com.customer.application.dto.response.GetCustomer;
+import com.customer.application.exceptions.CustomerNotFoundException;
 
 /**
  * Servicio para gestionar las operaciones relacionadas con los clientes
@@ -25,10 +26,14 @@ public interface CustomerService {
     /**
      * Busca un cliente por su identificador único.
      *
+     * Si el cliente no es encontrado, se lanza una excepción de tipo
+     * {@link CustomerNotFoundException}.
+     *
      * @param id Identificador del cliente.
      * @return Objeto GetCustomer con los datos del cliente encontrado.
+     * @throws CustomerNotFoundException Si no se encuentra un cliente con el
+     *                                   identificador proporcionado.
      */
-
     GetCustomer findById(Long id);
 
     /**
@@ -44,20 +49,29 @@ public interface CustomerService {
     /**
      * Actualiza los datos de un cliente existente identificado por su ID.
      *
+     * Si el cliente no es encontrado, se lanza una excepción de tipo
+     * {@link CustomerNotFoundException}.
+     *
      * @param updateCustomer Objeto con los datos actualizados del cliente.
      * @param id             Identificador del cliente que se desea actualizar.
      * @return Objeto GetCustomer con los datos actualizados del cliente.
+     * @throws CustomerNotFoundException Si no se encuentra un cliente con el
+     *                                   identificador proporcionado.
      */
-
     GetCustomer updateById(UpdateCustomer updateCustomer, Long id);
 
     /**
      * Actualiza la dirección (Address) asociada a un cliente específico.
      *
+     * Si el cliente no es encontrado, se lanza una excepción de tipo
+     * {@link CustomerNotFoundException}.
+     *
      * @param updateAddress Objeto con los nuevos datos de la dirección.
      * @param id            Identificador del cliente cuya dirección se desea
      *                      actualizar.
      * @return Objeto GetAddress con los datos de la dirección actualizada.
+     * @throws CustomerNotFoundException Si no se encuentra un cliente con el
+     *                                   identificador proporcionado.
      */
 
     GetAddress upadateAddressById(UpdateAddress updateAddress, Long id);
@@ -65,9 +79,14 @@ public interface CustomerService {
     /**
      * Elimina un cliente del sistema utilizando su identificador único.
      *
+     * Si el cliente no es encontrado, se lanza una excepción de tipo
+     * {@link CustomerNotFoundException}.
+     *
      * @param id Identificador del cliente a eliminar.
      * @return true si el cliente fue eliminado correctamente, false en caso
      *         contrario.
+     * @throws CustomerNotFoundException Si no se encuentra un cliente con el
+     *                                   identificador proporcionado.
      */
 
     boolean deleteById(Long id);

@@ -41,7 +41,7 @@ public class Customer {
     @Embedded
     private Address address;
 
-    @Column(nullable = false)
+    @Column(name = "is_active", nullable = false)
     private Boolean isActive;
 
     @CreationTimestamp
@@ -116,6 +116,10 @@ public class Customer {
 
     public LocalDateTime getDeletedAt() {
         return deletedAt;
+    }
+
+    public void setDeletedAt(LocalDateTime deletedAt) {
+        this.deletedAt = deletedAt;
     }
 
 }

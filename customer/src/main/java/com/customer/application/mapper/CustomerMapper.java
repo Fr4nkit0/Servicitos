@@ -5,6 +5,7 @@ import java.util.Optional;
 import com.customer.application.dto.request.SaveCustomer;
 import com.customer.application.dto.request.UpdateAddress;
 import com.customer.application.dto.request.UpdateCustomer;
+import com.customer.application.dto.response.GetAddress;
 import com.customer.application.dto.response.GetCustomer;
 import com.customer.domain.persistence.Address;
 import com.customer.domain.persistence.Customer;
@@ -49,6 +50,21 @@ public class CustomerMapper {
                 .address(address)
                 .isActive(true)
                 .build();
+    }
+
+    public static GetAddress toDtoFromAddress(Address address) {
+        if (address == null)
+            return null;
+        return new GetAddress(
+                address.getCountry(),
+                address.getState(),
+                address.getCity(),
+                address.getPostalCode(),
+                address.getStreet(),
+                address.getStreetNumber(),
+                address.getApartment(),
+                address.getFloor(),
+                address.getAdditionalInfo());
     }
 
     public static void updateCustomerEntityFromDto(UpdateCustomer updateCustomer, Customer oldCustomer) {
