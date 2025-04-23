@@ -104,23 +104,6 @@ public class CustomerServiceImpl implements CustomerService {
     /**
      * Actualiza los datos de un cliente existente identificado por su ID.
      * 
-     * @param updateCustomer Objeto con los datos actualizados del cliente.
-     * @param id             Identificador del cliente que se desea actualizar.
-     * @return Objeto {@link GetCustomer} con los datos actualizados del cliente.
-     * @throws CustomerNotFoundException Si no se encuentra un cliente con el
-     *                                   identificador proporcionado.
-     */
-
-    @Override
-    public GetCustomer updateById(UpdateCustomer updateCustomer, Long id) {
-        Customer oldCustomer = findByIdEntity(id);
-        CustomerMapper.updateCustomerEntityFromDto(updateCustomer, oldCustomer);
-        return CustomerMapper.toDtoFromEntity(customerRepository.save(oldCustomer));
-    }
-
-    /**
-     * Actualiza los datos de un cliente existente identificado por su ID.
-     * 
      * Este método busca un cliente en el sistema utilizando su ID y, si se
      * encuentra,
      * actualiza sus datos con los proporcionados en el objeto
@@ -131,6 +114,32 @@ public class CustomerServiceImpl implements CustomerService {
      * @param updateCustomer Objeto con los datos actualizados del cliente.
      * @param id             Identificador del cliente que se desea actualizar.
      * @return Objeto {@link GetCustomer} con los datos actualizados del cliente.
+     * @throws CustomerNotFoundException Si no se encuentra un cliente con el
+     *                                   identificador proporcionado.
+     */
+    @Override
+    public GetCustomer updateById(UpdateCustomer updateCustomer, Long id) {
+        Customer oldCustomer = findByIdEntity(id);
+        CustomerMapper.updateCustomerEntityFromDto(updateCustomer, oldCustomer);
+        return CustomerMapper.toDtoFromEntity(customerRepository.save(oldCustomer));
+    }
+
+    /**
+     * Actualiza la dirección de un cliente específico identificado por su ID.
+     * 
+     * Este método busca un cliente activo en el sistema utilizando su ID y, si se
+     * encuentra,
+     * actualiza su dirección con los datos proporcionados en el objeto
+     * {@link UpdateAddress}.
+     * 
+     * La dirección es modificada directamente en la entidad del cliente, y los
+     * cambios
+     * se persisten en la base de datos.
+     * 
+     * @param updateAddress Objeto con los nuevos datos de la dirección.
+     * @param id            Identificador del cliente cuya dirección se desea
+     *                      actualizar.
+     * @return Objeto {@link GetAddress} con los datos actualizados de la dirección.
      * @throws CustomerNotFoundException Si no se encuentra un cliente con el
      *                                   identificador proporcionado.
      */
