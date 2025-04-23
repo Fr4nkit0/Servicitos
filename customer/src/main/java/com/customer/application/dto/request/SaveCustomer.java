@@ -1,7 +1,6 @@
 package com.customer.application.dto.request;
 
 import java.io.Serializable;
-import java.util.Optional;
 
 import com.customer.application.valid.ValidMobile;
 
@@ -28,8 +27,8 @@ public record SaveCustomer(
                         @NotBlank(message = "{generic.notBlank}") @Size(min = 4, max = 100, message = "{generic.size}") String street,
 
                         @NotBlank(message = "{generic.notBlank}") @Size(min = 5, max = 10, message = "{generic.size}") String streetNumber,
-                        @Size(max = 10, message = "{generic.max}") Optional<String> apartment,
-                        @Size(max = 5, message = "{generic.max}") Optional<String> floor,
-                        @Size(max = 200, message = "{generic.max}") Optional<String> additionalInfo) {
+                        @Size(max = 10, message = "{generic.max}") String apartment,
+                        @Size(max = 5, message = "{generic.max}") String floor,
+                        @Size(max = 200, message = "{generic.max}") String additionalInfo) {
         }
 }
