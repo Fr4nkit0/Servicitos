@@ -12,7 +12,7 @@ public class MobileValidator implements ConstraintValidator<ValidMobile, String>
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         if (value == null || value.isEmpty()) {
-            return false;
+            return true; // esto lo tiene que validar otra Anotacion
         }
         // Usamos la expresión regular para validar el formato del número
         Pattern pattern = Pattern.compile(MOBILE_REGEX);
