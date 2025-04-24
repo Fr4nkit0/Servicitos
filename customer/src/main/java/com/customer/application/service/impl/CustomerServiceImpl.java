@@ -82,6 +82,25 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     /**
+     * Busca una Dirrecion de un cliente activo por su indentificador unico
+     * Este método verifica que el cliente encontrado esté marcado como activo
+     * en el sistema. Si el cliente no está activo o no existe, se lanza una
+     * excepción {@link CustomerNotFoundException}.
+     * 
+     * @param id Identificador único del cliente.
+     * @return Objeto {@link GetAddress} con los datos de la direccion del cliente
+     *         activo encontrado.
+     * @throws CustomerNotFoundException Si no se encuentra un cliente activo con el
+     *                                   identificador proporcionado.
+     */
+
+    @Transactional(readOnly = true)
+    @Override
+    public GetAddress findByIdAddress(Long id) {
+        return CustomerMapper.toDtoFromAddress(findByIdEntity(id));
+    }
+
+    /**
      * Guarda un nuevo cliente en el sistema y lo marca como activo.
      * 
      * Este método guarda un nuevo cliente en el sistema, utilizando los datos

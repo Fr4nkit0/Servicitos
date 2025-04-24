@@ -37,6 +37,18 @@ public interface CustomerService {
     GetCustomer findById(Long id);
 
     /**
+     * Busca una Dirrecion de un Cliente por su indentifacor unico.
+     * Si el cliente no es encontrado, se lanza una excepción de tipo
+     * {@link CustomerNotFoundException}.
+     * 
+     * @param id
+     * @return Objeto GetAddress con los datos del cliente encontrado.
+     * @throws CustomerNotFoundException Si no se encuentra un cliente con el
+     *                                   identificador proporcionado.
+     */
+    GetAddress findByIdAddress(Long id);
+
+    /**
      * Guarda un nuevo cliente en el sistema.
      *
      * @param saveCustomer Objeto con los datos necesarios para crear un nuevo

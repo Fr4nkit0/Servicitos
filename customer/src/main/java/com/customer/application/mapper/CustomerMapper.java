@@ -12,104 +12,111 @@ import com.customer.domain.persistence.Customer;
 
 public class CustomerMapper {
 
-    public static GetCustomer toDtoFromEntity(Customer customer) {
-        if (customer == null) {
-            return null;
-        }
-        return new GetCustomer(
-                customer.getId(),
-                customer.getName(),
-                customer.getLastname(),
-                customer.getEmail(),
-                customer.getMobile());
-    }
-
-    public static Customer toEntityFromDto(SaveCustomer saveCustomer) {
-        if (saveCustomer == null) {
-            return null;
+        public static GetCustomer toDtoFromEntity(Customer customer) {
+                if (customer == null) {
+                        return null;
+                }
+                return new GetCustomer(
+                                customer.getId(),
+                                customer.getName(),
+                                customer.getLastname(),
+                                customer.getEmail(),
+                                customer.getMobile());
         }
 
-        SaveCustomer.SaveAddress saveAddress = saveCustomer.address();
+        public static Customer toEntityFromDto(SaveCustomer saveCustomer) {
+                if (saveCustomer == null) {
+                        return null;
+                }
 
-        Address address = Address.builder()
-                .country(saveAddress.country())
-                .state(saveAddress.state())
-                .city(saveAddress.city())
-                .street(saveAddress.street())
-                .streetNumber(saveAddress.streetNumber())
-                .apartment(saveAddress.apartment())
-                .floor(saveAddress.floor())
-                .additionalInfo(saveAddress.additionalInfo())
-                .build();
+                SaveCustomer.SaveAddress saveAddress = saveCustomer.address();
 
-        return Customer.builder()
-                .name(saveCustomer.name())
-                .lastname(saveCustomer.lastName())
-                .email(saveCustomer.email())
-                .mobile(saveCustomer.mobile())
-                .address(address)
-                .isActive(true)
-                .build();
-    }
+                Address address = Address.builder()
+                                .country(saveAddress.country())
+                                .state(saveAddress.state())
+                                .city(saveAddress.city())
+                                .street(saveAddress.street())
+                                .streetNumber(saveAddress.streetNumber())
+                                .apartment(saveAddress.apartment())
+                                .floor(saveAddress.floor())
+                                .additionalInfo(saveAddress.additionalInfo())
+                                .postalCode(saveAddress.postalCode())
+                                .build();
 
-    public static GetAddress toDtoFromAddress(Address address) {
-        if (address == null)
-            return null;
-        return new GetAddress(
-                address.getCountry(),
-                address.getState(),
-                address.getCity(),
-                address.getPostalCode(),
-                address.getStreet(),
-                address.getStreetNumber(),
-                address.getApartment(),
-                address.getFloor(),
-                address.getAdditionalInfo());
-    }
+                return Customer.builder()
+                                .name(saveCustomer.name())
+                                .lastname(saveCustomer.lastName())
+                                .email(saveCustomer.email())
+                                .mobile(saveCustomer.mobile())
+                                .address(address)
+                                .isActive(true)
+                                .build();
+        }
 
-    public static void updateCustomerEntityFromDto(UpdateCustomer updateCustomer, Customer oldCustomer) {
-        if (updateCustomer == null || oldCustomer == null)
-            return;
-        Optional.ofNullable(updateCustomer.name())
-                .ifPresent(oldCustomer::setName);
+        public static GetAddress toDtoFromAddress(Customer customer) {
+                if (customer == null)
+                        return null;
+                return toDtoFromAddress(customer.getAddress());
+        }
 
-        Optional.ofNullable(updateCustomer.lastName())
-                .ifPresent(oldCustomer::setLastname);
+        public static GetAddress toDtoFromAddress(Address address) {
+                if (address == null)
+                        return null;
+                return new GetAddress(
+                                address.getCountry(),
+                                address.getState(),
+                                address.getCity(),
+                                address.getPostalCode(),
+                                address.getStreet(),
+                                address.getStreetNumber(),
+                                address.getApartment(),
+                                address.getFloor(),
+                                address.getAdditionalInfo());
+        }
 
-        Optional.ofNullable(updateCustomer.email())
-                .ifPresent(oldCustomer::setEmail);
+        public static void updateCustomerEntityFromDto(UpdateCustomer updateCustomer, Customer oldCustomer) {
+                if (updateCustomer == null || oldCustomer == null)
+                        return;
+                Optional.ofNullable(updateCustomer.name())
+                                .ifPresent(oldCustomer::setName);
 
-        Optional.ofNullable(updateCustomer.mobile())
-                .ifPresent(oldCustomer::setMobile);
-    }
+                Optional.ofNullable(updateCustomer.lastName())
+                                .ifPresent(oldCustomer::setLastname);
 
-    public static void updateAddressFromDto(UpdateAddress updateAddress, Address oldAddress) {
-        if (updateAddress == null || oldAddress == null)
-            return;
-        Optional.ofNullable(updateAddress.country())
-                .ifPresent(oldAddress::setCountry);
+                Optional.ofNullable(updateCustomer.email())
+                                .ifPresent(oldCustomer::setEmail);
 
-        Optional.ofNullable(updateAddress.state())
-                .ifPresent(oldAddress::setState);
+                Optional.ofNullable(updateCustomer.mobile())
+                                .ifPresent(oldCustomer::setMobile);
+        }
 
-        Optional.ofNullable(updateAddress.city())
-                .ifPresent(oldAddress::setCity);
+        public static void updateAddressFromDto(UpdateAddress updateAddress, Address oldAddress) {
+                if (updateAddress == null || oldAddress == null)
+                        return;
+                Optional.ofNullable(updateAddress.country())
+                                .ifPresent(oldAddress::setCountry);
 
-        Optional.ofNullable(updateAddress.street())
-                .ifPresent(oldAddress::setStreet);
+                Optional.ofNullable(updateAddress.state())
+                                .ifPresent(oldAddress::setState);
 
-        Optional.ofNullable(updateAddress.streetNumber())
-                .ifPresent(oldAddress::setStreetNumber);
+                Optional.ofNullable(updateAddress.city())
+                                .ifPresent(oldAddress::setCity);
 
-        Optional.ofNullable(updateAddress.apartment())
-                .ifPresent(oldAddress::setApartment);
+                Optional.ofNullable(updateAddress.street())
+                                .ifPresent(oldAddress::setStreet);
 
-        Optional.ofNullable(updateAddress.floor())
-                .ifPresent(oldAddress::setFloor);
+                Optional.ofNullable(updateAddress.streetNumber())
+                                .ifPresent(oldAddress::setStreetNumber);
 
-        Optional.ofNullable(updateAddress.additionalInfo())
-                .ifPresent(oldAddress::setAdditionalInfo);
+                Optional.ofNullable(updateAddress.apartment())
+                                .ifPresent(oldAddress::setApartment);
 
-    }
+                Optional.ofNullable(updateAddress.floor())
+                                .ifPresent(oldAddress::setFloor);
+
+                Optional.ofNullable(updateAddress.additionalInfo())
+                                .ifPresent(oldAddress::setAdditionalInfo);
+
+        }
 
 }

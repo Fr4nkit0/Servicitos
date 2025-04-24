@@ -17,7 +17,9 @@ import com.customer.application.exceptions.CustomerNotFoundException;
 import com.customer.application.service.CustomerService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -62,6 +64,11 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.findById(id));
     }
 
+    @GetMapping("/{id}/address")
+    public ResponseEntity<GetAddress> findByIdAddress(@PathVariable Long id) {
+        return ResponseEntity.ok(customerService.findByIdAddress(id));
+    }
+
     /**
      * Crea un nuevo cliente activo en el sistema.
      *
@@ -70,7 +77,7 @@ public class CustomerController {
      */
 
     @PostMapping
-    public ResponseEntity<GetCustomer> save(@RequestBody SaveCustomer saveCustomer, HttpServletRequest request) {
+    public ResponseEntity<GetCustomer> save(@RequestBody @Valid SaveCustomer saveCustomer, HttpServletRequest request) {
         GetCustomer createdCustomer = customerService.save(saveCustomer);
         String baseURL = request.getRequestURL().toString();
         URI newLocation = URI.create(baseURL + "/" + createdCustomer.id());
@@ -86,7 +93,8 @@ public class CustomerController {
      */
 
     @PatchMapping("/{id}")
-    public ResponseEntity<GetCustomer> updateById(@RequestBody UpdateCustomer updateCustomer, @PathVariable Long id) {
+    public ResponseEntity<GetCustomer> updateById(@RequestBody @Valid UpdateCustomer updateCustomer,
+            @PathVariable Long id) {
         return ResponseEntity.ok(customerService.updateById(updateCustomer, id));
     }
 
@@ -99,7 +107,7 @@ public class CustomerController {
      */
 
     @PatchMapping("/{id}/address")
-    public ResponseEntity<GetAddress> updateAddressById(@RequestBody UpdateAddress updateAddress,
+    public ResponseEntity<GetAddress> updateAddressById(@RequestBody @Valid UpdateAddress updateAddress,
             @PathVariable Long id) {
         return ResponseEntity.ok(customerService.upadateAddressById(updateAddress, id));
     }
@@ -117,7 +125,7 @@ public class CustomerController {
      * @throws CustomerNotFoundException si no se encuentra un cliente con el ID
      *                                   proporcionado.
      */
-    @PatchMapping("/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         customerService.deleteById(id);
         return ResponseEntity.noContent().build(); // HTTP 204 No Content

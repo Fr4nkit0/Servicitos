@@ -3,6 +3,7 @@ package com.customer.application.dto.request;
 import java.io.Serializable;
 
 import com.customer.application.valid.ValidMobile;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -22,13 +23,13 @@ public record SaveCustomer(
 
                         @NotBlank(message = "{generic.notBlank}") @Size(min = 4, max = 50, message = "{generic.size}") String city,
 
-                        @NotBlank(message = "{generic.notBlank}") @Size(min = 2, max = 20, message = "{generic.size}") String postalCode,
+                        @JsonProperty(value = "postal_code") @NotBlank(message = "{generic.notBlank}") @Size(min = 2, max = 20, message = "{generic.size}") String postalCode,
 
                         @NotBlank(message = "{generic.notBlank}") @Size(min = 4, max = 100, message = "{generic.size}") String street,
 
-                        @NotBlank(message = "{generic.notBlank}") @Size(min = 5, max = 10, message = "{generic.size}") String streetNumber,
+                        @JsonProperty(value = "street_number") @NotBlank(message = "{generic.notBlank}") @Size(min = 5, max = 10, message = "{generic.size}") String streetNumber,
                         @Size(max = 10, message = "{generic.max}") String apartment,
                         @Size(max = 5, message = "{generic.max}") String floor,
-                        @Size(max = 200, message = "{generic.max}") String additionalInfo) {
+                        @JsonProperty(value = "additional_info") @Size(max = 200, message = "{generic.max}") String additionalInfo) {
         }
 }

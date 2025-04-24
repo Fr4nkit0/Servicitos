@@ -12,10 +12,10 @@ import com.customer.domain.persistence.Customer;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
-    @Query(value = "SELECT * FROM customer c WHERE c.is_active = true", nativeQuery = true)
+    @Query(value = "SELECT * FROM customers c WHERE c.is_active = true", nativeQuery = true)
     Page<Customer> findAll(Pageable pageable);
 
-    @Query(value = "SELECT * FROM customer c WHERE c.is_active = true AND c.id = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM customers c WHERE c.is_active = true AND c.id = ?1", nativeQuery = true)
     Optional<Customer> findById(Long id);
 
 }
