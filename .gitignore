@@ -29,7 +29,8 @@ buildNumber.properties
 !**/src/test/**/target/
 
 # Maven Wrapper
-.mvn/wrapper/maven-wrapper.jar
+**/.mvn/wrapper/maven-wrapper.jar
+**/.mvn/wrapper/maven-wrapper.properties
 
 ### Gradle (si algún microservicio lo usa) ###
 .gradle/

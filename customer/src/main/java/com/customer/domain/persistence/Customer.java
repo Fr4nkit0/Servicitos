@@ -21,35 +21,73 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+/**
+ * Representa un cliente del sistema.
+ * Incluye información personal básica, dirección embebida y fechas de
+ * auditoría.
+ */
+
 public class Customer {
+    /**
+     * Identificador único del cliente.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    /**
+     * Nombre del cliente.
+     */
 
     @Column(name = "name", nullable = false, length = 100)
     private String name;
+    /**
+     * Apellido del cliente.
+     */
 
     @Column(name = "last_name", nullable = false, length = 100)
     private String lastname;
+    /**
+     * Correo electrónico del cliente, único en el sistema.
+     */
 
     @Column(name = "email", nullable = false, unique = true, length = 150)
     private String email;
 
+    /**
+     * Número de teléfono móvil del cliente.
+     */
+
     @Column(name = "mobile", length = 20)
     private String mobile;
+    /**
+     * Dirección embebida del cliente.
+     */
 
     @Embedded
     private Address address;
+    /**
+     * Indica si el cliente está activo en el sistema.
+     */
 
     @Column(name = "is_active", nullable = false)
     private Boolean isActive;
 
+    /**
+     * Fecha de creación del registro.
+     */
+
     @CreationTimestamp
     @Column(name = "create_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+    /**
+     * Fecha de última actualización del registro.
+     */
     @UpdateTimestamp
     @Column(name = "update_at")
     private LocalDateTime updatedAt;
+    /**
+     * Fecha de eliminación lógica (soft delete).
+     */
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
