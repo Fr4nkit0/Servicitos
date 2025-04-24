@@ -1,4 +1,4 @@
-package com.customer.application.valid;
+package com.commons.valid;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

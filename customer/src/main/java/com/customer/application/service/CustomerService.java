@@ -3,10 +3,10 @@ package com.customer.application.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.customer.application.dto.request.SaveCustomer;
+import com.commons.dto.request.SaveCustomer;
+import com.commons.dto.response.GetAddress;
 import com.customer.application.dto.request.UpdateAddress;
 import com.customer.application.dto.request.UpdateCustomer;
-import com.customer.application.dto.response.GetAddress;
 import com.customer.application.dto.response.GetCustomer;
 import com.customer.application.exceptions.CustomerNotFoundException;
 

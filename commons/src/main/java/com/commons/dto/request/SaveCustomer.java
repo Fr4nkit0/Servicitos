@@ -1,8 +1,8 @@
-package com.customer.application.dto.request;
+package com.commons.dto.request;
 
 import java.io.Serializable;
 
-import com.customer.application.valid.ValidMobile;
+import com.commons.valid.ValidMobile;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.validation.constraints.Email;
@@ -12,7 +12,7 @@ import jakarta.validation.constraints.Size;
 
 public record SaveCustomer(
                 @Size(min = 4, max = 100, message = "{generic.size}") @NotBlank(message = "{generic.notBlank}") String name,
-                @Size(min = 4, max = 100, message = "{generic.size}") @NotBlank(message = "{generic.notBlank}") String lastName,
+                @JsonProperty(value = "last_name") @Size(min = 4, max = 100, message = "{generic.size}") @NotBlank(message = "{generic.notBlank}") String lastName,
                 @Email(message = "invalidEmail") @NotBlank(message = "{generic.notBlank}") String email,
                 @NotBlank(message = "{generic.notBlank}") @ValidMobile String mobile,
                 @NotNull(message = "{generic.notNull}") SaveAddress address) implements Serializable {

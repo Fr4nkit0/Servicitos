@@ -1,4 +1,4 @@
-package com.customer.application.dto.response;
+package com.commons.dto.response;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

@@ -1,4 +1,4 @@
-package com.customer.application.valid;
+package com.commons.valid;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

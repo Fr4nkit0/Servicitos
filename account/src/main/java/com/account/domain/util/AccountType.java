@@ -8,12 +8,9 @@ package com.account.domain.util;
  * comúnmente para ahorrar.
  * - CORRIENTE: Cuenta de uso frecuente para transacciones diarias. Puede
  * incluir sobregiros.
- * - PLAZO_FIJO: Cuenta que bloquea un monto durante un período determinado a
- * cambio de intereses más altos.
  */
 public enum AccountType {
     AHORRO,
     CORRIENTE,
-    PLAZO_FIJO
 
 }
