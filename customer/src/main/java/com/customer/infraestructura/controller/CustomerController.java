@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.commons.dto.request.SaveCustomer;
 import com.commons.dto.response.GetAddress;
+import com.commons.dto.response.GetCustomerDetail;
 import com.customer.application.dto.request.UpdateAddress;
 import com.customer.application.dto.request.UpdateCustomer;
 import com.customer.application.dto.response.GetCustomer;
@@ -62,6 +63,18 @@ public class CustomerController {
     @GetMapping("/{id}")
     public ResponseEntity<GetCustomer> findById(@PathVariable Long id) {
         return ResponseEntity.ok(customerService.findById(id));
+    }
+
+    /**
+     * Busca un cliente con todos sus datos por su identificador único.
+     *
+     * @param id ID del cliente.
+     * @return Datos del cliente encontrado.
+     */
+
+    @GetMapping("/{id}/detail")
+    public ResponseEntity<GetCustomerDetail> findByIdCustomerDetail(@PathVariable Long id) {
+        return ResponseEntity.ok(customerService.findByIdCustomerDetail(id));
     }
 
     @GetMapping("/{id}/address")
