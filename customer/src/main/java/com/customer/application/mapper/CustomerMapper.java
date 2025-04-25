@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import com.commons.dto.request.SaveCustomer;
 import com.commons.dto.response.GetAddress;
+import com.commons.dto.response.GetCustomerDetail;
 import com.customer.application.dto.request.UpdateAddress;
 import com.customer.application.dto.request.UpdateCustomer;
 import com.customer.application.dto.response.GetCustomer;
@@ -11,6 +12,21 @@ import com.customer.domain.persistence.Address;
 import com.customer.domain.persistence.Customer;
 
 public class CustomerMapper {
+
+        public static GetCustomerDetail toDtoFCustomerDetail(Customer customer) {
+                if (customer == null) {
+                        return null;
+                }
+                return new GetCustomerDetail(
+                                customer.getId(),
+                                customer.getName(),
+                                customer.getLastname(),
+                                customer.getEmail(),
+                                customer.getMobile(),
+                                CustomerMapper.toDtoFromAddress(customer.getAddress()),
+                                customer.getCreatedAt(),
+                                customer.getDeletedAt());
+        }
 
         public static GetCustomer toDtoFromEntity(Customer customer) {
                 if (customer == null) {

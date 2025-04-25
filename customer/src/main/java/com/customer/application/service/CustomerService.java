@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 
 import com.commons.dto.request.SaveCustomer;
 import com.commons.dto.response.GetAddress;
+import com.commons.dto.response.GetCustomerDetail;
 import com.customer.application.dto.request.UpdateAddress;
 import com.customer.application.dto.request.UpdateCustomer;
 import com.customer.application.dto.response.GetCustomer;
@@ -24,15 +25,41 @@ public interface CustomerService {
     Page<GetCustomer> findAll(Pageable pageable);
 
     /**
-     * Busca un cliente por su identificador único.
-     *
+     * Obtiene el perfil completo de un cliente incluyendo su dirección.
+     * 
+     * Recupera todos los datos del cliente junto con la información detallada de su
+     * dirección.
      * Si el cliente no es encontrado, se lanza una excepción de tipo
      * {@link CustomerNotFoundException}.
      *
-     * @param id Identificador del cliente.
-     * @return Objeto GetCustomer con los datos del cliente encontrado.
-     * @throws CustomerNotFoundException Si no se encuentra un cliente con el
-     *                                   identificador proporcionado.
+     * @param id Identificador único del cliente
+     * @return Objeto {@link GetCustomerDetail} con la información completa del
+     *         cliente,
+     *         incluyendo todos sus campos y datos de dirección
+     * @throws CustomerNotFoundException Si no existe un cliente con el ID
+     *                                   proporcionado
+     * @apiNote Use este método cuando necesite toda la información del cliente
+     *          incluyendo
+     *          detalles de localización
+     */
+
+    GetCustomerDetail findByIdCustomerDetail(Long id);
+
+    /**
+     * Obtiene la información básica de un cliente.
+     * 
+     * Recupera los datos principales del cliente sin incluir información de
+     * dirección.
+     * Si el cliente no es encontrado, se lanza una excepción de tipo
+     * {@link CustomerNotFoundException}.
+     *
+     * @param id Identificador único del cliente
+     * @return Objeto {@link GetCustomer} con los datos esenciales del cliente,
+     *         excluyendo información de dirección
+     * @throws CustomerNotFoundException Si no existe un cliente con el ID
+     *                                   proporcionado
+     * @apiNote Use este método para operaciones que solo requieren datos básicos
+     *          del cliente
      */
     GetCustomer findById(Long id);
 

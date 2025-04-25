@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.commons.dto.request.SaveCustomer;
 import com.commons.dto.response.GetAddress;
+import com.commons.dto.response.GetCustomerDetail;
 import com.customer.application.dto.request.UpdateAddress;
 import com.customer.application.dto.request.UpdateCustomer;
 import com.customer.application.dto.response.GetCustomer;
@@ -62,19 +63,51 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     /**
-     * Busca un cliente activo por su identificador único.
+     * Obtiene el detalle completo de un cliente incluyendo información de
+     * dirección.
+     * Realiza una búsqueda en base de datos con fetch de los datos relacionados
+     * necesarios
+     * para construir un DTO completo. La operación se ejecuta dentro de una
+     * transacción
+     * de solo lectura para optimizar el rendimiento.
      * 
-     * Este método verifica que el cliente encontrado esté marcado como activo
-     * en el sistema. Si el cliente no está activo o no existe, se lanza una
-     * excepción {@link CustomerNotFoundException}.
-     * 
-     * @param id Identificador único del cliente.
-     * @return Objeto {@link GetCustomer} con los datos del cliente activo
-     *         encontrado.
-     * @throws CustomerNotFoundException Si no se encuentra un cliente activo con el
-     *                                   identificador proporcionado.
+     * @param id Identificador único del cliente (requerido)
+     * @return {@link GetCustomerDetail} DTO con todos los campos del cliente
+     *         incluyendo:
+     *         - Datos básicos
+     *         - Información de dirección completa
+     * @throws CustomerNotFoundException Si no existe ningún cliente con el ID
+     *                                   proporcionado
+     * @implNote El método:
+     *           - Utiliza el mapper {@link CustomerMapper} para conversión a DTO
      */
 
+    @Transactional(readOnly = true)
+
+    @Override
+    public GetCustomerDetail findByIdCustomerDetail(Long id) {
+        return CustomerMapper.toDtoFCustomerDetail(findByIdEntity(id));
+    }
+
+    /**
+     * Obtiene la información básica de un cliente verificando su estado activo.
+     * Versión optimizada para operaciones frecuentes que solo requieren datos
+     * esenciales.
+     * Incluye verificación de estado activo del cliente como requisito para la
+     * recuperación.
+     * 
+     * @param id Identificador único del cliente (debe corresponder a un cliente
+     *           activo)
+     * @return {@link GetCustomer} DTO
+     * @throws CustomerNotFoundException Si:
+     *                                   - No existe ningún cliente con el ID
+     *                                   - El cliente existe pero está marcado como
+     *                                   inactivo
+     * @implSpec Este método:
+     *           - Ejecuta dentro de contexto transaccional de solo lectura
+     *           - Reutiliza la entidad base del método {@code findByIdEntity}
+     *           - Aplica filtrado por estado activo automáticamente
+     */
     @Transactional(readOnly = true)
     @Override
     public GetCustomer findById(Long id) {
