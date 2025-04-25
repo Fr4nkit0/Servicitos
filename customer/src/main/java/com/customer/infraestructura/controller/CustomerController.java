@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.commons.dto.request.SaveCustomer;
 import com.commons.dto.response.GetAddress;
@@ -68,13 +69,13 @@ public class CustomerController {
     /**
      * Busca un cliente con todos sus datos por su identificador único.
      *
-     * @param id ID del cliente.
+     * @param email El Email del cliente.
      * @return Datos del cliente encontrado.
      */
-
-    @GetMapping("/{id}/detail")
-    public ResponseEntity<GetCustomerDetail> findByIdCustomerDetail(@PathVariable Long id) {
-        return ResponseEntity.ok(customerService.findByIdCustomerDetail(id));
+    @GetMapping("/detail")
+    public ResponseEntity<GetCustomerDetail> findByEmailCustomerDetail(
+            @RequestParam String email) {
+        return ResponseEntity.ok(customerService.findByIdCustomerDetail(email));
     }
 
     @GetMapping("/{id}/address")

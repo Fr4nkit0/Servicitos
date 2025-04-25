@@ -18,4 +18,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     @Query(value = "SELECT * FROM customers c WHERE c.is_active = true AND c.id = ?1", nativeQuery = true)
     Optional<Customer> findById(Long id);
 
+    @Query(value = "SELECT * FROM customers c WHERE c.is_active = true AND c.email = ?1", nativeQuery = true)
+    Optional<Customer> findByEmail(String email);
+
 }

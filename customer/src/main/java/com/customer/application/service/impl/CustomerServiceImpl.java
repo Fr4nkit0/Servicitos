@@ -85,8 +85,9 @@ public class CustomerServiceImpl implements CustomerService {
     @Transactional(readOnly = true)
 
     @Override
-    public GetCustomerDetail findByIdCustomerDetail(Long id) {
-        return CustomerMapper.toDtoFCustomerDetail(findByIdEntity(id));
+    public GetCustomerDetail findByIdCustomerDetail(String email) {
+        return CustomerMapper.toDtoFCustomerDetail(
+                customerRepository.findByEmail(email).orElseThrow(() -> new CustomerNotFoundException(email)));
     }
 
     /**

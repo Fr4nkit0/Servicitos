@@ -32,7 +32,7 @@ public interface CustomerService {
      * Si el cliente no es encontrado, se lanza una excepción de tipo
      * {@link CustomerNotFoundException}.
      *
-     * @param id Identificador único del cliente
+     * @param email Identificador del cliente
      * @return Objeto {@link GetCustomerDetail} con la información completa del
      *         cliente,
      *         incluyendo todos sus campos y datos de dirección
@@ -43,7 +43,7 @@ public interface CustomerService {
      *          detalles de localización
      */
 
-    GetCustomerDetail findByIdCustomerDetail(Long id);
+    GetCustomerDetail findByIdCustomerDetail(String email);
 
     /**
      * Obtiene la información básica de un cliente.
