@@ -91,8 +91,9 @@ public class CustomerController {
      */
 
     @PostMapping
-    public ResponseEntity<GetCustomer> save(@RequestBody @Valid SaveCustomer saveCustomer, HttpServletRequest request) {
-        GetCustomer createdCustomer = customerService.save(saveCustomer);
+    public ResponseEntity<GetCustomerDetail> save(@RequestBody @Valid SaveCustomer saveCustomer,
+            HttpServletRequest request) {
+        GetCustomerDetail createdCustomer = customerService.save(saveCustomer);
         String baseURL = request.getRequestURL().toString();
         URI newLocation = URI.create(baseURL + "/" + createdCustomer.id());
         return ResponseEntity.created(newLocation).body(createdCustomer);

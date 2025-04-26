@@ -145,13 +145,15 @@ public class CustomerServiceImpl implements CustomerService {
      * 
      * @param saveCustomer Objeto con los datos necesarios para crear un nuevo
      *                     cliente.
-     * @return Objeto {@link GetCustomer} con los datos del cliente recién creado y
+     * @return Objeto {@link GetCustomerDetail} con los datos del cliente recién
+     *         creado y
      *         marcado como activo.
      */
 
     @Override
-    public GetCustomer save(SaveCustomer saveCustomer) {
-        return CustomerMapper.toDtoFromEntity(customerRepository.save(CustomerMapper.toEntityFromDto(saveCustomer)));
+    public GetCustomerDetail save(SaveCustomer saveCustomer) {
+        return CustomerMapper
+                .toDtoFCustomerDetail(customerRepository.save(CustomerMapper.toEntityFromDto(saveCustomer)));
     }
 
     /**

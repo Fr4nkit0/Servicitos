@@ -80,10 +80,11 @@ public interface CustomerService {
      *
      * @param saveCustomer Objeto con los datos necesarios para crear un nuevo
      *                     cliente.
-     * @return Objeto GetCustomer con los datos del cliente recién creado.
+     * @return Objeto {@link GetCustomerDetail} con los datos del cliente recién
+     *         creado.
      */
 
-    GetCustomer save(SaveCustomer saveCustomer);
+    GetCustomerDetail save(SaveCustomer saveCustomer);
 
     /**
      * Actualiza los datos de un cliente existente identificado por su ID.
