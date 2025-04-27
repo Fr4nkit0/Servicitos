@@ -13,11 +13,7 @@ public interface AccountService {
 
     FullAccountInfo addAccount(SaveAccount saveAccount);
 
-    GetAccount findById(Long id);
-
     GetAccount findByNumber(String number);
-
-    void deleteAccount(Long id);
 
     void deleteByNumber(String number);
 }
