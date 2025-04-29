@@ -55,7 +55,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Transactional(readOnly = true)
     @Override
     public Page<GetCustomer> findAll(Pageable pageable) {
-        Page<Customer> customerPage = customerRepository.findAll(pageable);
+        Page<Customer> customerPage = customerRepository.findActiveAll(pageable);
         if (customerPage.isEmpty()) {
             throw new CustomerNotFoundException("No se encontraron clientes");
         }
@@ -237,7 +237,8 @@ public class CustomerServiceImpl implements CustomerService {
      *                                   identificador proporcionado.
      */
     private Customer findByIdEntity(Long id) {
-        return customerRepository.findById(id).orElseThrow(() -> new CustomerNotFoundException(String.valueOf(id)));
+        return customerRepository.findActiveById(id)
+                .orElseThrow(() -> new CustomerNotFoundException(String.valueOf(id)));
     }
 
 }

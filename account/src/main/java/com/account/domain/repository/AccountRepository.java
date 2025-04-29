@@ -12,10 +12,10 @@ import org.springframework.data.domain.Pageable;
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
     @Query("SELECT a FROM Account a WHERE a.isActive = true")
-    Page<Account> findAll(Pageable pageable);
+    Page<Account> findActiveAll(Pageable pageable);
 
     @Query("SELECT a FROM  Account a WHERE a.isActive = true AND a.id = ?1")
-    Optional<Account> findById(Long id);
+    Optional<Account> findActiveById(Long id);
 
     @Query("SELECT a FROM Account a WHERE a.isActive = true AND a.accountNumber = ?1")
     Optional<Account> findByAccountNumber(String accountNumber);
