@@ -1,17 +1,24 @@
 package com.account.application.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestClientException;
 
 import com.account.application.client.CustomerRestClient;
 import com.account.application.dto.request.SaveAccount;
 import com.account.application.dto.response.FullAccountInfo;
 import com.account.application.dto.response.GetAccount;
+import com.account.application.exceptions.AccountPersistenceException;
+import com.account.application.exceptions.CustomerCreationException;
+import com.account.application.exceptions.CustomerServiceException;
 import com.account.application.mapper.AccountMapper;
 import com.account.application.service.AccountService;
 import com.account.domain.persistence.Account;
@@ -60,28 +67,84 @@ public class AccountServiceImpl implements AccountService {
     }
 
     /**
-     * Crea una nueva cuenta asociada a un cliente, creando primero el cliente
-     * mediante una llamada al servicio externo de customer.
+     * Crea una nueva cuenta asociada a un cliente. Este proceso incluye:
+     * 
+     * La validación de los datos de entrada.
+     * La creación del cliente a través de un servicio externo.
+     * La creación y persistencia de la cuenta en la base de datos.
+     * 
      *
-     * @param saveAccount DTO con los datos necesarios para crear la cuenta y el
-     *                    cliente
-     * @return DTO con la información completa de la cuenta y del cliente
-     * @throws RuntimeException si no se puede crear el cliente o no se recibe
-     *                          respuesta válida
+     * En caso de que el cliente ya exista, se recomienda validar previamente fuera
+     * de este método,
+     * ya que aquí se asume la creación de un nuevo cliente.
+     *
+     * @param saveAccount Objeto DTO que contiene los datos requeridos para
+     *                    registrar
+     *                    tanto al cliente como la cuenta asociada.
+     * @return Objeto {@link FullAccountInfo} con la información completa de la
+     *         cuenta creada
+     *         y los detalles del cliente recién registrado.
+     *
+     * @throws IllegalArgumentException    Si los datos de entrada son nulos o
+     *                                     incompletos.
+     * @throws CustomerCreationException   Si la creación del cliente falla por
+     *                                     parte del servicio externo,
+     *                                     incluyendo errores HTTP o respuestas
+     *                                     inesperadas.
+     * @throws CustomerServiceException    Si ocurre un error al comunicarse con el
+     *                                     servicio externo
+     *                                     o si la respuesta del cliente es
+     *                                     inválida.
+     * @throws AccountPersistenceException Si ocurre un error al guardar la cuenta
+     *                                     en la base de datos.
      */
 
     @Override
     public FullAccountInfo addAccount(SaveAccount saveAccount) {
-        ResponseEntity<GetCustomerDetail> createdCustomer = restClient.save(saveAccount.customer());
-        if (createdCustomer.getStatusCode().is2xxSuccessful()) {
+        try {
+            // 1. Validación de entrada robusta
+            if (saveAccount == null) {
+                throw new IllegalArgumentException("SaveAccount no puede ser nulo");
+            }
+            if (saveAccount.customer() == null) {
+                throw new IllegalArgumentException("Customer data es requerido");
+            }
+            // 2. Creación del cliente con manejo de null seguro
+            ResponseEntity<GetCustomerDetail> createdCustomer = restClient.save(saveAccount.customer());
+
+            // 3. Manejo de respuestas HTTP con Optional para evitar NPE
+            HttpStatusCode statusCode = createdCustomer.getStatusCode();
+            if (!statusCode.is2xxSuccessful()) {
+                String errorDetails = Optional.ofNullable(createdCustomer.getBody())
+                        .map(Object::toString)
+                        .orElse("Sin detalles del error");
+
+                throw new CustomerCreationException(
+                        String.format("Error creando cliente - Código: %d - Detalles: %s",
+                                statusCode.value(),
+                                errorDetails));
+            }
+
+            // 4. Validación del cuerpo de respuesta con mensaje claro
             GetCustomerDetail customer = createdCustomer.getBody();
             if (customer == null) {
-                throw new RuntimeException("Customer not found");
+                throw new CustomerServiceException("Respuesta inválida del servicio de clientes: cuerpo vacío");
             }
-            Account createdAccount = AccountMapper.toEntityFromDto(saveAccount, customer.id());
-            return AccountMapper.toDtoFromEntity(accountRepository.save(createdAccount), customer);
+            if (customer.id() == null) {
+                throw new CustomerServiceException("El cliente creado no tiene ID válido");
+            }
+
+            // 5. Persistencia con verificación de resultado
+            Account accountToSave = AccountMapper.toEntityFromDto(saveAccount, customer.id());
+            Account savedAccount = accountRepository.save(accountToSave);
+            return AccountMapper.toDtoFromEntity(savedAccount, customer);
+
+        } catch (DataAccessException ex) {
+            // Loggear excepción completa para debugging
+            throw new AccountPersistenceException("Error crítico al guardar datos", ex);
+        } catch (RestClientException ex) {
+            throw new CustomerServiceException("Error en servicio externo", ex);
         }
-        return null;
     }
 
     /**
