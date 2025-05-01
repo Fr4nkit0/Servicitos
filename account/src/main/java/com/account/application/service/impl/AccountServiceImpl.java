@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestClientException;
 
 import com.account.application.client.CustomerRestClient;
+import com.account.application.dto.request.Deposito;
 import com.account.application.dto.request.SaveAccount;
 import com.account.application.dto.response.FullAccountInfo;
 import com.account.application.dto.response.GetAccount;
@@ -145,6 +146,23 @@ public class AccountServiceImpl implements AccountService {
         } catch (RestClientException ex) {
             throw new CustomerServiceException("Error en servicio externo", ex);
         }
+    }
+
+    /**
+     * Realiza un depósito en una cuenta. Este método busca la cuenta por su número
+     * y actualiza su saldo.
+     *
+     * @param deposito DTO que contiene el número de cuenta y el monto a depositar
+     * @return DTO con la información de la cuenta después del depósito
+     * @throws RuntimeException si no se encuentra la cuenta o si ocurre un error
+     *                          al actualizar el saldo
+     */
+
+    @Override
+    public GetAccount depositInAccount(Deposito deposito) {
+        Account account = findByAccountNumber(deposito.accountNumber());
+        account.setBalance(account.getBalance().add(deposito.amount()));
+        return AccountMapper.toGetDto(accountRepository.save(account));
     }
 
     /**

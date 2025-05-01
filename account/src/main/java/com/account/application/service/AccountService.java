@@ -1,5 +1,6 @@
 package com.account.application.service;
 
+import com.account.application.dto.request.Deposito;
 import com.account.application.dto.request.SaveAccount;
 import com.account.application.dto.response.FullAccountInfo;
 import com.account.application.dto.response.GetAccount;
@@ -29,6 +30,15 @@ public interface AccountService {
      * @return DTO con información detallada de la cuenta creada
      */
     FullAccountInfo addAccount(SaveAccount saveAccount);
+
+    /**
+     * Realiza un depósito en una cuenta.
+     *
+     * @param deposito DTO con los datos necesarios
+     * @return DTO con información de la cuenta después del depósito
+     */
+
+    GetAccount depositInAccount(Deposito deposito);
 
     /**
      * Busca una cuenta por su número.
