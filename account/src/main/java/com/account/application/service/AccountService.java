@@ -1,9 +1,9 @@
 package com.account.application.service;
 
-import com.account.application.dto.request.Deposito;
 import com.account.application.dto.request.SaveAccount;
 import com.account.application.dto.response.FullAccountInfo;
 import com.account.application.dto.response.GetAccount;
+import com.commons.dto.request.Deposito;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

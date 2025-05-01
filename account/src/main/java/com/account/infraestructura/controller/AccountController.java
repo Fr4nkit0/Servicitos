@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.account.application.dto.request.Deposito;
 import com.account.application.dto.request.SaveAccount;
 import com.account.application.dto.response.FullAccountInfo;
 import com.account.application.dto.response.GetAccount;
 import com.account.application.service.AccountService;
+import com.commons.dto.request.Deposito;
 
 import jakarta.validation.Valid;
 

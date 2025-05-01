@@ -1,4 +1,4 @@
-package com.account.application.dto.request;
+package com.commons.dto.request;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -10,7 +10,7 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
 public record Deposito(
-                @NotBlank(message = "{generic.notBlank}") @Size(max = 30, message = "{generic.size}") @JsonProperty(value = "account_number") String accountNumber,
+        @NotBlank(message = "{generic.notBlank}") @Size(max = 30, message = "{generic.size}") @JsonProperty(value = "account_number") String accountNumber,
 
-                @Positive BigDecimal amount) implements Serializable {
+        @Positive BigDecimal amount) implements Serializable {
 }

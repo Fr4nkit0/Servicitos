@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestClientException;
 
 import com.account.application.client.CustomerRestClient;
-import com.account.application.dto.request.Deposito;
 import com.account.application.dto.request.SaveAccount;
 import com.account.application.dto.response.FullAccountInfo;
 import com.account.application.dto.response.GetAccount;
@@ -24,6 +23,7 @@ import com.account.application.mapper.AccountMapper;
 import com.account.application.service.AccountService;
 import com.account.domain.persistence.Account;
 import com.account.domain.repository.AccountRepository;
+import com.commons.dto.request.Deposito;
 import com.commons.dto.response.GetCustomerDetail;
 
 /**
