@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.commons.dto.request.SaveCustomer;
 import com.commons.dto.response.GetCustomerDetail;
 
-@FeignClient(name = "${feign.clients.customer.name}", url = "${feign.clients.customer.url}")
+@FeignClient(name = "${feign.clients.customer.name}", url = "${feign.clients.customer.url}/api/v1/customers")
 public interface CustomerRestClient {
 
     @PostMapping

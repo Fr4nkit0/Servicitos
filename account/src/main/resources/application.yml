@@ -21,11 +21,10 @@ server:
     context-path: /api/v1
 
 feign:
-  client:
-    config:
-      customer:
-        name: customer-service
-        url: http://localhost:8083/api/v1/customers
+  clients:
+    customer:
+      name: customer-service
+      url: http://localhost:8083
 
 
 
