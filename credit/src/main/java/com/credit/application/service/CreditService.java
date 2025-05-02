@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.credit.application.dto.request.SaveCredit;
+import com.credit.application.dto.response.EventCredit;
 import com.credit.application.dto.response.GetCredit;
 
 public interface CreditService {
@@ -12,7 +13,7 @@ public interface CreditService {
 
     GetCredit findById(Long id);
 
-    GetCredit create(SaveCredit saveCredit);
+    EventCredit registerCredit(SaveCredit saveCredit);
 
     void delete(Long id);
 
