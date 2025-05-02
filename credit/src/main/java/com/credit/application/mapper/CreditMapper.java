@@ -1,5 +1,7 @@
 package com.credit.application.mapper;
 
+import com.commons.dto.request.Deposito;
+import com.credit.application.dto.request.SaveCredit;
 import com.credit.application.dto.response.GetCredit;
 import com.credit.domain.persistence.Credit;
 
@@ -16,6 +18,30 @@ public class CreditMapper {
                 credit.getCreditType().toString(),
                 credit.getAccountNumber(),
                 credit.getClientId());
+    }
+
+    public static Credit toEntityFromDto(SaveCredit credit) {
+        if (credit == null)
+            return null;
+        return Credit.builder()
+                .amount(credit.amount())
+                .termMonths(credit.termMonths())
+                .interestRate(credit.interestRate())
+                .creditType(credit.creditType())
+                .accountNumber(credit.accountNumber())
+                .clientId(credit.clientId())
+                .isActive(true)
+                .build();
+    }
+
+    public static Deposito toDeposito(SaveCredit credit) {
+        if (credit == null)
+            return null;
+        {
+        }
+        return new Deposito(
+                credit.accountNumber(),
+                credit.amount());
     }
 
 }

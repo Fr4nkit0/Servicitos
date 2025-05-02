@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: account-service
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:8090}/${DB_NAME:credit_db}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:root}
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+
+server:
+  port: ${SERVER_PORT:8085}
+  servlet:
+    context-path: /api/v1
+
+feign:
+  clients:
+    customer:
+      name: customer-service
+      url: http://localhost:8085
+
