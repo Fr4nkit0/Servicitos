@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.account.application.dto.request.SaveAccount;
-import com.account.application.dto.response.GetAccount;
+import com.account.application.dto.response.FullAccountInfo;
 import com.account.application.service.AccountService;
 import com.commons.dto.request.Deposito;
-import com.commons.dto.response.FullAccountInfo;
+import com.commons.dto.response.GetAccount;
 
 import jakarta.validation.Valid;
 
