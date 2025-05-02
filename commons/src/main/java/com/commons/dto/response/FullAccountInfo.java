@@ -1,9 +1,8 @@
-package com.account.application.dto.response;
+package com.commons.dto.response;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import com.commons.dto.response.GetCustomerDetail;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record FullAccountInfo(

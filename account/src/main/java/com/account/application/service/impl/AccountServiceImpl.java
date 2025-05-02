@@ -14,7 +14,6 @@ import org.springframework.web.client.RestClientException;
 
 import com.account.application.client.CustomerRestClient;
 import com.account.application.dto.request.SaveAccount;
-import com.account.application.dto.response.FullAccountInfo;
 import com.account.application.dto.response.GetAccount;
 import com.account.application.exceptions.AccountPersistenceException;
 import com.account.application.exceptions.CustomerCreationException;
@@ -24,6 +23,7 @@ import com.account.application.service.AccountService;
 import com.account.domain.persistence.Account;
 import com.account.domain.repository.AccountRepository;
 import com.commons.dto.request.Deposito;
+import com.commons.dto.response.FullAccountInfo;
 import com.commons.dto.response.GetCustomerDetail;
 
 /**

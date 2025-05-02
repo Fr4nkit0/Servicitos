@@ -1,9 +1,9 @@
 package com.account.application.mapper;
 
 import com.account.application.dto.request.SaveAccount;
-import com.account.application.dto.response.FullAccountInfo;
 import com.account.application.dto.response.GetAccount;
 import com.account.domain.persistence.Account;
+import com.commons.dto.response.FullAccountInfo;
 import com.commons.dto.response.GetCustomerDetail;
 
 public class AccountMapper {
