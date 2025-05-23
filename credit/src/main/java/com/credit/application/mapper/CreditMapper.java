@@ -3,6 +3,7 @@ package com.credit.application.mapper;
 import com.commons.dto.request.Deposito;
 import com.credit.application.dto.request.SaveCredit;
 import com.credit.application.dto.response.GetCredit;
+import com.credit.application.event.EventCredit;
 import com.credit.domain.persistence.Credit;
 
 public class CreditMapper {
@@ -44,4 +45,12 @@ public class CreditMapper {
                 credit.amount());
     }
 
+    public static EventCredit toEvent(Credit credit) {
+        if (credit == null)
+            return null;
+        return new EventCredit(
+                credit.getClientId(),
+                credit.getAccountNumber(),
+                credit.getAmount());
+    }
 }

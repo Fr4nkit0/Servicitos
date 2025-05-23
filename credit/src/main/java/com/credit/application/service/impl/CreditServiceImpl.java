@@ -21,6 +21,7 @@ import com.credit.application.exceptions.AccountServiceException;
 import com.credit.application.exceptions.CreditNotFoundException;
 import com.credit.application.exceptions.CreditPersistenceException;
 import com.credit.application.mapper.CreditMapper;
+import com.credit.application.service.CreditEventService;
 import com.credit.application.service.CreditService;
 import com.credit.domain.persistence.Credit;
 import com.credit.domain.repository.CreditRepository;
@@ -39,17 +40,21 @@ public class CreditServiceImpl implements CreditService {
 
     private final CreditRepository creditRepository;
     private final AccountRestClient accountRestClient;
+    private final CreditEventService creditEventService;
 
     /**
      * Constructor que inyecta dependencias.
      *
-     * @param creditRepository  Repositorio de créditos.
-     * @param accountRestClient Cliente REST para el servicio de cuentas.
+     * @param creditRepository   Repositorio de créditos.
+     * @param accountRestClient  Cliente REST para el servicio de cuentas.
+     * @param creditEventService Servicio de eventos de créditos.
      */
 
-    public CreditServiceImpl(CreditRepository creditRepository, AccountRestClient accountRestClient) {
+    public CreditServiceImpl(CreditRepository creditRepository, AccountRestClient accountRestClient,
+            CreditEventService creditEventService) {
         this.creditRepository = creditRepository;
         this.accountRestClient = accountRestClient;
+        this.creditEventService = creditEventService;
     }
 
     /**
@@ -123,6 +128,9 @@ public class CreditServiceImpl implements CreditService {
             // Persistencia con verificación de resultado
             Credit creditToSave = CreditMapper.toEntityFromDto(saveCredit);
             Credit savedCredit = creditRepository.save(creditToSave);
+            // De momento lo comentamos porque falta implemnentación del servicio de evento
+            // con kafka
+            // this.creditEventService.publish(CreditMapper.toEvent(savedCredit));
             return CreditMapper.toGetDto(savedCredit);
 
         } catch (DataAccessException ex) {
